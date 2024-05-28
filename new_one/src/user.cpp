@@ -10,23 +10,21 @@ user_base :: user_base(string name,string gender,int age)
 
 user_base :: ~user_base()
 {
-	
 }
 
-user_derived ;; user_derived(string name,string gender,int age,struct passenger_list * list) : user_base(name,gender,age)
+user_derived::user_derived(string name,string gender,int age,struct passenger_list * list) : user_base(name,gender,age)
 {
 	this->list=list;
-	cout << "user object  "  get_name() << "  was created"<<end;
+	this->wallet = 0;
 }
 
 user_derived :: ~user_derived()
 {
-	cout << "user object  " << get_name() << "  was destroyed"<<endl;
 }
 
-void  user_derived : set_id (long int id)
+void  user_derived :: set_id (long int id)
 {
-	this.id =id;
+	this->id =id;
 }
 
 void user_derived :: add_tickets(vector <ticket *> tickets)
@@ -45,50 +43,67 @@ void user_derived::add_wallet(int amount)
 void user_derived :: ticket_far_red(int amount)
 {
 	wallet+=amount;
+	
 	cout<<"Amount  :  "<<amount << "added to wallet\n";
-	cout << "Cuurent balace :  "<< wallet << endl;
+	cout << "Current balance :  "<< wallet << endl;
 }
 
 
-void  cancel_ticket(user_derived * user);
+void user_derived::cancel_ticket(user_derived* user)
 {
 	int number=1;
+	int count=1;
+	if(!user->booked.size())
+	{
+		cout<<endl;
+		cout<<"NO TICKETS"<<endl;
+		return;
+	}
 	for(auto ptr : user->booked)
 	{
 		cout<< "S_No  :  "<<number<<endl;
-		ptr.get_details();
+		ptr->get_details();
+		number++;
 	}
 	cout << "Enter ticket number  :  ";
 	number=get_input(1);
 	for(auto ptr : user->booked)
 	{
-		if(!number)
+		if(number==count)
 		{
-			if(ptr->status=="CONFIRMED")
+			if(ptr->get_status()=="*CONFIRMED*")
 			{
-				make_available(ptr->seat_ptr,from,to);
+				make_available(ptr->get_seat_ptr(),ptr,ptr->get_from(),ptr->get_to());
 				cout << "	Ticket was cancelled , refund was credited";
 				ptr->status="Cancelled";
-				user->add_wallet(ptr->fare);
+				cout<<endl;
+				user->ticket_far_red(ptr->get_fare());
 			}
 		}
+		count++;
 	}
 }
 
+// void user_derived :: cancel_waiting_list()
+// {
+// 	//
+// }
 
 user_derived * create_user_fileio(ifstream &in)
 {
 	char name[20];
 	char gender[20];
 	int age;
-	in->getline(name,255);
-	in->getline(gender,255):
+	in.getline(name,20);
+	in.getline(gender,20);
 	in >> age;
 	string sname=upper(name);
 	string sgender=upper(gender);
 	struct passenger_list * list=new passenger_list;
-	list->obj = new passenger(sname,sgender);
+	list->obj = new passenger(sname,sgender,age);
 	user_derived *ptr = new user_derived(sname,sgender,age,list);
 	return ptr;
 }
+
+
 

@@ -14,8 +14,8 @@ INCDIR = inc
 
 EXEC = ticket_system
 
-target : 
-	$(CC) $(SRCDIR)/*.cpp -I$(INCDIR)
+# target : 
+# 	$(CC) $(SRCDIR)/*.cpp -I$(INCDIR)
 
 all : clean $(EXEC)
 
