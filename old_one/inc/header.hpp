@@ -4,15 +4,16 @@
 
 
 #include <iostream>
-using namespace std;        
+using namespace std
 #include <string>
 #include <fstream>
+#include <cctype>
 #include <sstream>
 #include <vector>
-#include <iomanip>
 
 
-class binary_tree_class;
+
+class  binary_tree_class;
 class user_base;
 class user_derived;
 class passenger;
@@ -20,10 +21,13 @@ class train;
 class coach;
 class seat;
 class ticket;
-class month;
+class week;
 class day;
-template <class x > x get_input(x a);
- string upper(string);
+template <class x > y get_input(x a);
+ string upper(string)
+ void get_details;
  string center_align(const string str, int width);
+ 
+ 
+ int global=100000;
 
-#endif  
